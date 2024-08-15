@@ -1,6 +1,7 @@
 // src/components/Category.js
 import React from 'react';
 import Widget from './Widget';
+import WidgetManager from './WidgetManager';
 
 function Category({ category, addWidget, removeWidget }) {
   const handleAddWidget = () => {
@@ -24,6 +25,11 @@ function Category({ category, addWidget, removeWidget }) {
           />
         ))}
       </div>
+      <WidgetManager
+        category={category}
+        addWidget={addWidget}
+        removeWidget={removeWidget}
+      />
     </div>
   );
 }

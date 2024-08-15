@@ -95,3 +95,80 @@ body {
 .remove-widget-btn:hover {
   background-color: #c82333;
 }
+
+/* src/App.css */
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-widget-btn {
+  cursor: pointer;
+  color: #dc3545;
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.remove-widget-btn:hover {
+  color: #c82333;
+}
+
+/* src/App.css */
+.widget-manager {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.widget-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.widget-item {
+  display: flex;
+  align-items: center;
+}
+
+.widget-item input {
+  margin-right: 8px;
+}
+
+/* src/components/Dashboard.css */
+.dashboard {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-widget-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.widget-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}

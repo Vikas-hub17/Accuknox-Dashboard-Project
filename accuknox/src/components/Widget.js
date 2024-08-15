@@ -4,9 +4,11 @@ import React from 'react';
 function Widget({ widget, removeWidget }) {
   return (
     <div className="widget">
-      <h3>{widget.name}</h3>
+      <div className="widget-header">
+        <h3>{widget.name}</h3>
+        <span className="remove-widget-btn" onClick={removeWidget}>×</span>
+      </div>
       <p>{widget.text}</p>
-      <button className="remove-widget-btn" onClick={removeWidget}>Remove</button>
     </div>
   );
 }

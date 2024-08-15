@@ -1,72 +1,63 @@
 // src/components/Dashboard.js
 import React, { useState } from 'react';
-import Category from './Category';
-import Search from './Search';
+import WidgetSelectorModal from './WidgetSelectorModal';
+import Widget from './Widget';
+import '../App.css';  // Assuming you have a CSS file for Dashboard styling
 
-const initialData = {
-  categories: [
-    {
-      name: 'CSPM Executive Dashboard',
-      widgets: [
-        { name: 'Widget 1', text: 'Random text for Widget 1' },
-        { name: 'Widget 2', text: 'Random text for Widget 2' },
-      ],
-    },
-    {
-      name: 'Another Category',
-      widgets: [
-        { name: 'Widget 3', text: 'Random text for Widget 3' },
-      ],
-    },
-  ],
-};
+// The existing widgets, components, and layout can be retained here.
+const initialWidgets = [
+  // Example of existing widgets, you can replace these with your actual widget components or elements
+  { id: 1, name: 'Cloud Accounts', component: <Widget type="CloudAccounts" /> },
+  { id: 2, name: 'Cloud Account Risk Assessment', component: <Widget type="CloudAccountRiskAssessment" /> },
+  // Add your existing widgets or any default widgets here
+];
 
 function Dashboard() {
-  const [categories, setCategories] = useState(initialData.categories);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [widgets, setWidgets] = useState(initialWidgets);
 
-  const addWidget = (categoryName, widget) => {
-    setCategories(categories.map(category => {
-      if (category.name === categoryName) {
-        return {
-          ...category,
-          widgets: [...category.widgets, widget],
-        };
-      }
-      return category;
-    }));
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
   };
 
-  const removeWidget = (categoryName, widgetName) => {
-    setCategories(categories.map(category => {
-      if (category.name === categoryName) {
-        return {
-          ...category,
-          widgets: category.widgets.filter(widget => widget.name !== widgetName),
-        };
-      }
-      return category;
-    }));
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
-  const filteredCategories = categories.map(category => ({
-    ...category,
-    widgets: category.widgets.filter(widget =>
-      widget.name.toLowerCase().includes(searchTerm.toLowerCase())
-    ),
-  }));
+  const handleSaveWidgets = (selectedWidgets) => {
+    // Map the selected widgets to match the structure used in your existing dashboard
+    const updatedWidgets = selectedWidgets.map(widget => ({
+      id: widget.id,
+      name: widget.name,
+      component: <Widget type={widget.name.replace(/ /g, '')} />
+    }));
+    setWidgets(updatedWidgets);
+  };
 
   return (
     <div className="dashboard">
-      <Search onSearch={setSearchTerm} />
-      {filteredCategories.map(category => (
-        <Category
-          key={category.name}
-          category={category}
-          addWidget={addWidget}
-          removeWidget={removeWidget}
-        />
-      ))}
+      {/* Existing design elements can go here */}
+      <div className="header">
+        <h2>Dashboard</h2>
+        <button onClick={handleOpenModal} className="add-widget-btn">+ Add Widget</button>
+      </div>
+
+      {/* Layout for displaying widgets, adjust as per your existing design */}
+      <div className="widgets-grid">
+        {widgets.map(widget => (
+          <div key={widget.id} className="widget-container">
+            {widget.component}
+          </div>
+        ))}
+      </div>
+
+      {/* Widget selection modal */}
+      <WidgetSelectorModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveWidgets}
+        selectedWidgets={widgets}
+      />
     </div>
   );
 }
