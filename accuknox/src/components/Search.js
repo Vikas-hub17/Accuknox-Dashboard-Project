@@ -1,3 +1,4 @@
+// src/components/Search.js
 import React, { useState } from 'react';
 
 function Search({ onSearch }) {
@@ -9,12 +10,14 @@ function Search({ onSearch }) {
   };
 
   return (
-    <input
-      type="text"
-      value={searchTerm}
-      onChange={handleChange}
-      placeholder="Search widgets..."
-    />
+    <div className="search-bar">
+      <input
+        type="text"
+        value={searchTerm}
+        onChange={handleChange}
+        placeholder="Search widgets..."
+      />
+    </div>
   );
 }
 
