@@ -1,0 +1,20 @@
+/* Widget.css */
+.widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .remove-widget-btn {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #ff4d4f;
+    transition: color 0.3s ease;
+  }
+  
+  .remove-widget-btn:hover {
+    color: #ff7875;
+  }
+  

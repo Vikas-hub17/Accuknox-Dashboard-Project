@@ -1,84 +1,54 @@
-// src/components/WidgetSelectorModal.js
 import React, { useState } from 'react';
-import './WidgetSelector.css';
-
-const widgetCategories = {
-  CSPM: [
-    { name: 'Cloud Accounts', id: 1 },
-    { name: 'Cloud Account Risk Assessment', id: 2 }
-    // Add more widgets under CSPM category here
-  ],
-  CWPP: [
-    { name: 'Workload Alerts', id: 3 },
-    { name: 'Top 5 Namespace Specific Alerts', id: 4 }
-    // Add more widgets under CWPP category here
-  ],
-  Image: [
-    { name: 'Image Risk Assessment', id: 5 },
-    { name: 'Image Security Issues', id: 6 }
-    // Add more widgets under Image category here
-  ],
-  Ticket: [
-    { name: 'Open Tickets', id: 7 },
-    { name: 'Closed Tickets', id: 8 }
-    // Add more widgets under Ticket category here
-  ]
-};
+import './WidgetSelectorModal.css';
 
 function WidgetSelectorModal({ isOpen, onClose, onSave, selectedWidgets }) {
-  const [activeCategory, setActiveCategory] = useState('CSPM');
-  const [widgets, setWidgets] = useState(selectedWidgets || []);
+  const [selected, setSelected] = useState(selectedWidgets);
 
-  const toggleWidget = (widget) => {
-    if (widgets.includes(widget)) {
-      setWidgets(widgets.filter(w => w !== widget));
+  const handleToggle = (widget) => {
+    const isSelected = selected.some(w => w.id === widget.id);
+    if (isSelected) {
+      setSelected(selected.filter(w => w.id !== widget.id));
     } else {
-      setWidgets([...widgets, widget]);
+      setSelected([...selected, widget]);
     }
   };
 
   const handleSave = () => {
-    onSave(widgets);
-    onClose();
+    onSave(selected);
   };
 
   if (!isOpen) return null;
 
+  const availableWidgets = [
+    { id: 1, name: 'Cloud Accounts', type: 'pie' },
+    { id: 2, name: 'Cloud Account Risk Assessment', type: 'donut' },
+    { id: 3, name: 'Top 5 Namespace Specific Alerts', type: 'graph' },
+    { id: 4, name: 'Workload Alerts', type: 'graph' },
+    { id: 5, name: 'Image Risk Assessment', type: 'bar' },
+    { id: 6, name: 'Image Security Issues', type: 'bar' },
+  ];
+
   return (
-    <div className="modal-overlay">
-      <div className="modal">
+    <div className="widget-selector-modal">
+      <div className="modal-content">
         <div className="modal-header">
-          <h3>Add Widget</h3>
-          <button className="close-button" onClick={onClose}>×</button>
+          <h2>Add Widget</h2>
+          <button onClick={onClose} className="close-btn">&times;</button>
         </div>
         <div className="modal-body">
-          <div className="tabs">
-            {Object.keys(widgetCategories).map(category => (
-              <button
-                key={category}
-                className={`tab-button ${activeCategory === category ? 'active' : ''}`}
-                onClick={() => setActiveCategory(category)}
-              >
-                {category}
-              </button>
-            ))}
-          </div>
-          <div className="widget-options">
-            {widgetCategories[activeCategory].map(widget => (
-              <div key={widget.id} className="widget-option">
-                <input
-                  type="checkbox"
-                  checked={widgets.includes(widget)}
-                  onChange={() => toggleWidget(widget)}
-                />
-                <label>{widget.name}</label>
-              </div>
-            ))}
-          </div>
+          {availableWidgets.map(widget => (
+            <div key={widget.id} className="widget-option">
+              <input
+                type="checkbox"
+                checked={selected.some(w => w.id === widget.id)}
+                onChange={() => handleToggle(widget)}
+              />
+              <label>{widget.name}</label>
+            </div>
+          ))}
         </div>
         <div className="modal-footer">
-          <button className="cancel-button" onClick={onClose}>Cancel</button>
-          <button className="confirm-button" onClick={handleSave}>Confirm</button>
+          <button onClick={handleSave} className="save-btn">Confirm</button>
         </div>
       </div>
     </div>
