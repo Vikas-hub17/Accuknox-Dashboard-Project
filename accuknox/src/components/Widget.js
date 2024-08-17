@@ -1,7 +1,7 @@
 import React from 'react';
 import './Widget.css';
 
-function Widget({ widget, onAdd, onRemove }) {
+function Widget({ widget, onAdd }) {
   if (widget.type === 'empty') {
     return (
       <div className="widget empty-widget">
@@ -16,11 +16,11 @@ function Widget({ widget, onAdd, onRemove }) {
     <div className="widget">
       <div className="widget-header">
         <h3>{widget.name}</h3>
-        <button className="remove-widget-btn" onClick={onRemove}>×</button>
       </div>
       <div className="widget-body">
+        {/* Widget content based on type */}
         {widget.type === 'custom' && <div className="widget-custom">{widget.text}</div>}
-        {/* Render other types as needed */}
+        {/* Add other widget type renderings here */}
       </div>
     </div>
   );

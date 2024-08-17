@@ -1,27 +1,128 @@
-/* Dashboard.css */
 .dashboard {
-    padding: 20px;
-  }
-  
-  .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .add-widget-btn {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .widgets-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  
+  padding: 20px;
+  position: relative;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dashboard-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.action-btn {
+  background-color: #004abf;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.date-filter-btn {
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.dashboard-section {
+  margin-bottom: 40px;
+}
+
+.widgets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.side-pane {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.side-pane-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.side-pane-nav {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.nav-item {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.nav-item.active {
+  background-color: #004abf;
+  color: white;
+}
+
+.widget-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.widget-option {
+  display: flex;
+  align-items: center;
+}
+
+.confirm-btn {
+  background-color: #004abf;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+.nav{
+  padding: 5px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.search-bar {
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 500px;
+  margin-left: 30%;
+  background-color: #aee8f72d;
+}
