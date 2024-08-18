@@ -1,20 +1,53 @@
+.widget {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.widget-body {
+  margin-top: 10px;
+}
+
+.empty-widget {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  border: 2px dashed #ddd;
+  border-radius: 10px;
+}
+
+.add-widget-btn {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #0073e6;
+}
 /* Widget.css */
 .widget-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .remove-widget-btn {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #ff4d4f;
-    transition: color 0.3s ease;
-  }
-  
-  .remove-widget-btn:hover {
-    color: #ff7875;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove-widget-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ff4d4f;
+  transition: color 0.3s ease;
+}
+
+.remove-widget-btn:hover {
+  color: #ff7875;
+}
