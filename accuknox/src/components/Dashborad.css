@@ -1,208 +1,231 @@
 .dashboard {
-  padding: 20px;
-  background-color: #f5f6fa;
+  padding: 10px;
   font-family: 'Arial', sans-serif;
+  background-color: #d0eff859;
 }
 
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .dashboard-title {
   font-size: 24px;
-  color: #3949ab;
   font-weight: bold;
+  margin: 0;
 }
 
-.dashboard-actions .action-btn {
-  margin-left: 10px;
-  cursor: pointer;
-  border: none;
-  background-color: #e8ecf6;
-  padding: 10px 15px;
-  border-radius: 5px;
-  color: #3949ab;
-  font-weight: bold;
-}
-
-.dashboard-actions .refresh-btn, 
+.dashboard-actions .action-btn,
+.dashboard-actions .refresh-btn,
 .dashboard-actions .menu-btn {
-  cursor: pointer;
-  border: none;
-  background-color: #e8ecf6;
-  padding: 10px;
-  border-radius: 5px;
-  color: #3949ab;
+  background-color: #ffffff;
+  color: rgb(93, 93, 93);
+  border: 1px solid rgba(159, 159, 159, 0.526);
+  padding: 8px;
   margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
-.dashboard-actions .date-filter-btn {
+.dashboard-actions .date-filter-btn{
+  background-color: #ffffff;
+  color:#000941;
+  border: 1px solid #000941fa;
+  padding: 8px;
+  margin-left: 10px;
   cursor: pointer;
-  border: none;
-  background-color: #3949ab;
-  color: white;
-  padding: 10px 20px;
   border-radius: 5px;
-  font-weight: bold;
+  font-size: 14px;
 }
 
 .dashboard-section {
-  margin-top: 20px;
+  padding: 10px;
+  display: inline-block;
 }
 
 .section-title {
-  font-size: 18px;
-  color: #3949ab;
-  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .widgets-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 10px;
+  justify-content: space-between;
 }
 
 .widget-placeholder {
+  width: 350px;
+  height: 200px;
   background-color: #ffffff;
-  border: 1px dashed #d3d3d3;
-  border-radius: 10px;
+  border: 2px dashed #d0d0d074;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 150px;
-  color: #999;
-  font-size: 16px;
   cursor: pointer;
+  font-size: 16px;
+  color: #838383;
+}
+
+.widget-placeholder button{
+  padding: 5px;
+  background-color: rgba(169, 169, 169, 0.216);
+  border: 1px solid rgba(168, 168, 168, 0.445);
+  color: rgb(111, 106, 106);
 }
 
 .side-pane {
   position: fixed;
-  top: 0;
   right: 0;
-  width: 30%;
-  height: 100%;
-  background: #fff;
-  box-shadow: -2px 0px 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
+  top: 0;
+  bottom: 0;
+  width: 350px;
+  background-color: white;
+  border-left: 2px solid #ababab;
   z-index: 1000;
+  box-shadow: -2px 0px 10px rgba(0,0,0,0.1);
 }
 
 .side-pane-header {
+  font-size: 12px;
+  height: 40px;
+  padding: 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background: #3949ab;
-  color: #fff;
+  background-color: #050062;
+  color: white;
+}
+
+.side-pane-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
 }
 
 .side-pane-content {
-  padding: 20px;
-  overflow-y: auto;
+  padding: 30px;
 }
 
-.widget-nav {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.nav-item {
+.widget-nav .nav-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(177, 177, 177, 0.592);
+  padding: 8px;
+  margin-right: 10px;
   cursor: pointer;
-  padding: 10px;
-  border: none;
-  background: none;
+  color: rgba(125, 125, 125, 0.833);
 }
 
-.nav-item.active {
-  border-bottom: 2px solid #3949ab;
-  font-weight: bold;
+.widget-nav .nav-item.active {      
+  border-color: #050062;
+  color: #050062;
+  font-weight: 600;
 }
 
 .widget-list .widget-item {
-  display: block;
-  margin-bottom: 10px;
+  display: inline-block;
+  margin-top: 20px;
+  align-items: flex-start;
+  font-size: 15px;
+}
+
+.widget-list .widget-item input[type="checkbox"] {
+  margin-right: 10px;
+  display: inline-block;
 }
 
 .side-pane-footer {
   display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  border-top: 1px solid #eee;
+  justify-content: end;
+  background-color: #f4f4f4;
+  margin-top: 100%;
+  position: static;
 }
 
-.confirm-btn, .cancel-btn {
-  margin-left: 10px;
+.side-pane-footer .cancel-btn {
+  margin-left: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #050062;
+  border-color: #050062;
   padding: 10px 20px;
   cursor: pointer;
-  background-color: #3949ab;
-  color: #fff;
+  font-weight: 600;
+}
+
+.side-pane-footer .confirm-btn{
+  font-weight: 600;
+  margin-left: 20px;
+  border-radius: 10px;
+  background-color:#050062;
+  color: white;
   border: none;
-  border-radius: 5px;
-  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
 }
 
-.cancel-btn {
-  background-color: #d32f2f;
-}
-
-.widget-placeholder{
-  background-color: #d32f2f;
-}
-
-
-.dashboard {
-  padding: 20px;
-}
-
-.dashboard-header {
+.add-widget-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.modal-title {
+  font-size: 18px;
   margin-bottom: 20px;
 }
 
-.dashboard-header h2 {
-  margin: 0;
+.input-field {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.dashboard-actions {
+.modal-actions {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
 }
 
-.search-bar {
-  padding: 10px;
-  margin-right: 10px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  width: 200px;
-}
-
-.action-btn {
-  background: #f0f0f0;
-  border: none;
-  margin-right: 10px;
-  padding: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.date-filter-btn {
-  background: #003366;
+.modal-actions .add-btn {
+  background-color: #4a90e2;
   color: white;
   border: none;
-  padding: 10px;
-  border-radius: 5px;
+  padding: 10px 20px;
   cursor: pointer;
 }
 
-.widgets-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 20px;
+.modal-actions .cancel-btn {
+  background-color: #ccc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.widget-item{
+  background-color: #ebeaea87;
+  padding: 10px;
+  width: 100%;
+  border-radius: 10px;
 }

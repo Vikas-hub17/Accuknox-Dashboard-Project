@@ -1,49 +1,24 @@
 import React, { useState } from 'react';
 import Widget from './Widget';
-import AddWidgetModal from './AddWidgetModal';
 import './Dashborad.css';
 
 const initialWidgets = {
   cspm: [
-    { id: 1, name: 'Cloud Accounts', type: 'pie' },
-    { id: 2, name: 'Cloud Account Risk Assessment', type: 'donut' },
+    { id: 1, name: 'Cloud Accounts', type: 'pie', hasData: true },
+    { id: 2, name: 'Cloud Account Risk Assessment', type: 'donut', hasData: true },
   ],
   cwpp: [
-    { id: 3, name: 'Top 5 Namespace Specific Alerts', type: 'graph' },
-    { id: 4, name: 'Workload Alerts', type: 'graph' },
-    { id: 5, name: '', type: 'empty' },  // Empty widget placeholder
+    { id: 4, name: 'Top 5 Namespace Specific Alerts', type: 'graph', hasData: false },
+    { id: 5, name: 'Workload Alerts', type: 'graph', hasData: false },
   ],
   registry: [
-    { id: 6, name: 'Image Risk Assessment', type: 'bar' },
-    { id: 7, name: 'Image Security Issues', type: 'bar' },
-    { id: 8, name: '', type: 'empty' },  // Empty widget placeholder
-  ]
-};
-
-const allWidgets = {
-  cspm: [
-    { id: 1, name: 'Cloud Accounts', type: 'pie' },
-    { id: 2, name: 'Cloud Account Risk Assessment', type: 'donut' },
-    { id: 3, name: 'New Widget', type: 'custom' }
+    { id: 7, name: 'Image Risk Assessment', type: 'bar', hasData: true },
+    { id: 8, name: 'Image Security Issues', type: 'bar', hasData: true },
   ],
-  cwpp: [
-    { id: 4, name: 'Top 5 Namespace Specific Alerts', type: 'graph' },
-    { id: 5, name: 'Workload Alerts', type: 'graph' },
-    { id: 6, name: 'Another Widget', type: 'custom' }
-  ],
-  registry: [
-    { id: 7, name: 'Image Risk Assessment', type: 'bar' },
-    { id: 8, name: 'Image Security Issues', type: 'bar' },
-    { id: 9, name: 'Yet Another Widget', type: 'custom' }
-  ]
 };
-
 
 function Dashboard() {
   const [widgets, setWidgets] = useState(initialWidgets);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedWidgetSection, setSelectedWidgetSection] = useState('');
-  const [selectedWidgetId, setSelectedWidgetId] = useState(null);
   const [isSidePaneOpen, setIsSidePaneOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('cspm');
   const [selectedWidgets, setSelectedWidgets] = useState({
@@ -51,6 +26,11 @@ function Dashboard() {
     cwpp: initialWidgets.cwpp.map(widget => widget.id),
     registry: initialWidgets.registry.map(widget => widget.id),
   });
+
+  // New State for Adding a Widget
+  const [newWidget, setNewWidget] = useState({ name: '', description: '' });
+  const [isAddingWidget, setIsAddingWidget] = useState(false);
+  const [categoryForNewWidget, setCategoryForNewWidget] = useState(null);
 
   const toggleWidgetSelection = (widgetId) => {
     setSelectedWidgets(prevSelectedWidgets => {
@@ -71,33 +51,49 @@ function Dashboard() {
     setIsSidePaneOpen(false);
   };
 
-  const handleAddWidgetClick = (section, widgetId) => {
-    setSelectedWidgetSection(section);
-    setSelectedWidgetId(widgetId);
-    setIsModalOpen(true);
-  };
-  const handleModalSubmit = (widgetData) => {
-    const updatedSection = widgets[selectedWidgetSection].map(widget =>
-      widget.id === selectedWidgetId
-        ? { ...widget, ...widgetData, type: 'custom' }
-        : widget
-    );
-    setWidgets({ ...widgets, [selectedWidgetSection]: updatedSection });
-    setIsModalOpen(false);
+  const handleAddWidgetClick = (category) => {
+    setCategoryForNewWidget(category);
+    setIsAddingWidget(true);
   };
 
-  const handleWidgetToggle = (widgetId, category) => {
-    const currentWidgets = widgets[category];
-    const widgetIndex = currentWidgets.findIndex(widget => widget.id === widgetId);
-    if (widgetIndex > -1) {
-      // Remove widget if it exists
-      const updatedWidgets = currentWidgets.filter(widget => widget.id !== widgetId);
-      setWidgets({ ...widgets, [category]: updatedWidgets });
-    } else {
-      // Add widget if it doesn't exist
-      const widgetToAdd = allWidgets[category].find(widget => widget.id === widgetId);
-      setWidgets({ ...widgets, [category]: [...currentWidgets, widgetToAdd] });
-    }
+  const handleWidgetInputChange = (e) => {
+    setNewWidget({
+      ...newWidget,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleAddWidgetSubmit = () => {
+    const newWidgetId = new Date().getTime(); // Unique ID based on timestamp
+    const updatedCategoryWidgets = [
+      ...widgets[categoryForNewWidget],
+      { id: newWidgetId, name: newWidget.name, description: newWidget.description, type: 'custom', hasData: true },
+    ];
+
+    setWidgets({
+      ...widgets,
+      [categoryForNewWidget]: updatedCategoryWidgets,
+    });
+
+    setSelectedWidgets(prevSelectedWidgets => ({
+      ...prevSelectedWidgets,
+      [categoryForNewWidget]: [...prevSelectedWidgets[categoryForNewWidget], newWidgetId],
+    }));
+
+    setIsAddingWidget(false);
+    setNewWidget({ name: '', description: '' });
+  };
+
+  const handleRemoveWidget = (category, widgetId) => {
+    setWidgets({
+      ...widgets,
+      [category]: widgets[category].filter(widget => widget.id !== widgetId),
+    });
+
+    setSelectedWidgets(prevSelectedWidgets => ({
+      ...prevSelectedWidgets,
+      [category]: prevSelectedWidgets[category].filter(id => id !== widgetId),
+    }));
   };
 
   return (
@@ -112,50 +108,39 @@ function Dashboard() {
         </div>
       </div>
 
+      {/* CSPM Section */}
       <div className="dashboard-section">
         <h3 className="section-title">CSPM Executive Dashboard</h3>
         <div className="widgets-grid">
           {widgets.cspm.filter(widget => selectedWidgets.cspm.includes(widget.id)).map(widget => (
-            <Widget key={widget.id} widget={widget} onAdd={() => handleAddWidgetClick('cspm', widget.id)}  />
+            <Widget key={widget.id} widget={widget} onRemove={() => handleRemoveWidget('cspm', widget.id)} />
           ))}
-          {widgets.cspm.filter(widget => !selectedWidgets.cspm.includes(widget.id)).map(widget => (
-            <div key={widget.id} className="widget-placeholder">+ Add Widget</div>
-          ))}
+          
+          <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cspm')}>+ Add Widget</button></div>
         </div>
       </div>
 
+      {/* CWPP Section */}
       <div className="dashboard-section">
         <h3 className="section-title">CWPP Dashboard</h3>
         <div className="widgets-grid">
           {widgets.cwpp.filter(widget => selectedWidgets.cwpp.includes(widget.id)).map(widget => (
-            <Widget key={widget.id} widget={widget} onAdd={() => handleAddWidgetClick('cspm', widget.id)} />
+            <Widget key={widget.id} widget={widget} onRemove={() => handleRemoveWidget('cwpp', widget.id)} />
           ))}
-          {widgets.cwpp.filter(widget => !selectedWidgets.cwpp.includes(widget.id)).map(widget => (
-            <div key={widget.id} className="widget-placeholder">+ Add Widget</div>
-          ))}
+         <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cspm')}>+ Add Widget</button></div>
         </div>
       </div>
 
+      {/* Registry Section */}
       <div className="dashboard-section">
         <h3 className="section-title">Registry Scan</h3>
         <div className="widgets-grid">
           {widgets.registry.filter(widget => selectedWidgets.registry.includes(widget.id)).map(widget => (
-            <Widget key={widget.id} widget={widget} onAdd={() => handleAddWidgetClick('cspm', widget.id)} />
+            <Widget key={widget.id} widget={widget} onRemove={() => handleRemoveWidget('registry', widget.id)} />
           ))}
-          {widgets.registry.filter(widget => !selectedWidgets.registry.includes(widget.id)).map(widget => (
-            <div key={widget.id} className="widget-placeholder">+ Add Widget</div>
-          ))}
+          <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cspm')}>+ Add Widget</button></div>
         </div>
       </div>
-
-      {isModalOpen && (
-        <AddWidgetModal
-          widgets={widgets}
-          selectedWidgetId={selectedWidgetId}
-          onSubmit={handleModalSubmit}
-          onClose={() => setIsModalOpen(false)}
-        />
-      )}
 
       {isSidePaneOpen && (
         <div className="side-pane">
@@ -181,7 +166,7 @@ function Dashboard() {
                   <input 
                     type="checkbox" 
                     checked={selectedWidgets[selectedCategory].includes(widget.id)} 
-                    onChange={() => handleWidgetToggle(widget.id, selectedCategory)} 
+                    onChange={() => toggleWidgetSelection(widget.id)} 
                   />
                   {widget.name}
                 </label>
@@ -189,11 +174,38 @@ function Dashboard() {
             </div>
           </div>
           <div className="side-pane-footer">
+          <button className="cancel-btn" onClick={() => setIsSidePaneOpen(false)}>Cancel</button>
             <button className="confirm-btn" onClick={handleConfirmSelection}>Confirm</button>
-            <button className="cancel-btn" onClick={() => setIsSidePaneOpen(false)}>Cancel</button>
           </div>
         </div>
-        
+      )}
+
+      {isAddingWidget && (
+        <div className="add-widget-modal">
+          <div className="modal-content">
+            <h2 className="modal-title">Add New Widget</h2>
+            <input 
+              type="text" 
+              placeholder="Widget Name" 
+              name="name" 
+              className="input-field"
+              value={newWidget.name} 
+              onChange={handleWidgetInputChange} 
+            />
+            <input 
+              type="text" 
+              placeholder="Widget Description" 
+              name="description" 
+              className="input-field"
+              value={newWidget.description} 
+              onChange={handleWidgetInputChange} 
+            />
+            <div className="modal-actions">
+              <button className="add-btn" onClick={handleAddWidgetSubmit}>Add Widget</button>
+              <button className="cancel-btn" onClick={() => setIsAddingWidget(false)}>Cancel</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
