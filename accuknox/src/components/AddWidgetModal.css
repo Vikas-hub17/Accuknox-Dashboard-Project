@@ -1,6 +1,6 @@
 /* Overall Modal Styles */
 .modal {
-  position: static;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -9,28 +9,29 @@
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
-  width: 300px;
-  max-width: 90%;
+  width: 100%;
 }
 
 .modal-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
+  text-align: center;
 }
 
 .modal-content h2 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 20px;
   text-align: center;
   color: #333;
 }
 
 .modal-content input {
-  width: 100%;
+  margin-right: 150px;
+  width: 400px;
   padding: 10px;
-  font-size: 1rem;
+  font-size: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -38,25 +39,24 @@
 
 .modal-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
 }
 
 .modal-actions button {
-  padding: 10px 20px;
-  font-size: 1rem;
+  font-size: 12px;
   border-radius: 4px;
   cursor: pointer;
   border: none;
 }
 
-.modal-actions button:first-child {
+.modal-actions button:last-child {
   background-color: #fff;
   color: #000080;
   border: 2px solid #000080;
 }
 
-.modal-actions button:last-child {
+.modal-actions button:first-child {
   background-color: #000080;
   color: #fff;
 }

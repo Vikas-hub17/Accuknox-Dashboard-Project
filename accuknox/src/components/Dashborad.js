@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Widget from './Widget';
 import './Dashborad.css';
+import './AddWidgetModal';
 
 
 const initialWidgets = {
