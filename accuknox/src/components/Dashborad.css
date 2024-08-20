@@ -6,7 +6,7 @@
 
 /* Search Bar Styling */
 .search-bar {
-  width: 300px;
+  width: 350px;
   height: 8px;
   padding: 10px 15px;
   margin-left: 100px;
@@ -15,12 +15,13 @@
   font-size: 14px;
   outline: none;
   transition: all 0.3s ease;
-  
 }
+
 .dashboard input[type='text'] {
   margin-left: 800px;
-  display: inline-block;
   background-color: #d0eff859;
+  margin-top: 10px;
+  margin-left: 40%;
 }
 
 .search-bar:focus {
@@ -29,12 +30,27 @@
 }
 
 .nav-head{
+  display:flex;
   padding: 15px;
   margin-bottom: 50px;
   margin-top: -50px;
   width: 100%;
   height: 30px;
   background-color: #ffffff;
+  cursor: pointer;
+}
+
+.nav-head .material-icons{
+  color: #d2d2d2e6;
+  margin-left: 40px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-head .material-icons:hover{
+  color: #050062;
+  
 }
 
 .widgets {
@@ -106,14 +122,12 @@
   width: 350px;
   height: 200px;
   background-color: #ffffff;
-  border: 2px dashed #d0d0d074;
+  border: 3px dashed #d0d0d074;
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   font-size: 16px;
   color: #838383;
-
 }
 
 .widget-placeholder button{
@@ -122,6 +136,7 @@
   border: 1px solid rgba(168, 168, 168, 0.445);
   color: rgb(111, 106, 106);
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .side-pane {

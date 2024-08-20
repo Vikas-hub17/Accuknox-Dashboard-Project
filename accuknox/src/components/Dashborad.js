@@ -109,7 +109,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className='nav-head'>
-        <h5>Home &gt; Dashboard</h5>
+        <h5>Home &gt; <span style={{color:'#02002cb7',fontWeight:900}}>DashboardV2</span></h5>
         <input
           type="text"
           placeholder="Search widgets..."
@@ -117,6 +117,9 @@ function Dashboard() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-bar"
         />
+        <i className="material-icons">&#xe7fd;</i>
+        <i className="material-icons">&#xe7f7;</i>
+        <i className="material-icons">&#xe63e;</i>
         </div>
       <div className="dashboard-header">
         <h2 className="dashboard-title">CNAPP Dashboard</h2>
