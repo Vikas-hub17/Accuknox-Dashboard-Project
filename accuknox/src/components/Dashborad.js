@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import Widget from './Widget';
 import './Dashborad.css';
 
+
 const initialWidgets = {
   cspm: [
-    { id: 1, name: 'Cloud Accounts', type: 'pie', hasData: true },
-    { id: 2, name: 'Cloud Account Risk Assessment', type: 'donut', hasData: true },
+    { id: 1, name: 'Cloud Accounts', type: 'pie', hasData: true, imgSrc: '../assests/donut.jpg'},
+    { id: 2, name: 'Cloud Account Risk Assessment', type: 'donut', hasData: true, imgSrc: '../assests/donut.png'},
   ],
   cwpp: [
-    { id: 4, name: 'Top 5 Namespace Specific Alerts', type: 'graph', hasData: false },
-    { id: 5, name: 'Workload Alerts', type: 'graph', hasData: false },
+    { id: 4, name: 'Top 5 Namespace Specific Alerts', type: 'graph', hasData: false, imgSrc: '../assests/donut.png'},
+    { id: 5, name: 'Workload Alerts', type: 'graph', hasData: false, imgSrc: '../assests/donut.png'},
   ],
   registry: [
-    { id: 7, name: 'Image Risk Assessment', type: 'bar', hasData: true },
-    { id: 8, name: 'Image Security Issues', type: 'bar', hasData: true },
+    { id: 7, name: 'Image Risk Assessment', type: 'bar', hasData: true, imgSrc: '../assests/donut.png'},
+    { id: 8, name: 'Image Security Issues', type: 'bar', hasData: true, imgSrc: '../assests/donut.png'},
   ],
 };
 
@@ -26,6 +27,8 @@ function Dashboard() {
     cwpp: initialWidgets.cwpp.map(widget => widget.id),
     registry: initialWidgets.registry.map(widget => widget.id),
   });
+
+  const [searchTerm, setSearchTerm] = useState('');
 
   // New State for Adding a Widget
   const [newWidget, setNewWidget] = useState({ name: '', description: '' });
@@ -96,8 +99,25 @@ function Dashboard() {
     }));
   };
 
+  const filteredWidgets = {};
+  Object.keys(widgets).forEach(category => {
+    filteredWidgets[category] = widgets[category].filter(widget =>
+      widget.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
+
   return (
     <div className="dashboard">
+      <div className='nav-head'>
+        <h5>Home &gt; Dashboard</h5>
+        <input
+          type="text"
+          placeholder="Search widgets..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+        </div>
       <div className="dashboard-header">
         <h2 className="dashboard-title">CNAPP Dashboard</h2>
         <div className="dashboard-actions">
@@ -112,10 +132,9 @@ function Dashboard() {
       <div className="dashboard-section">
         <h3 className="section-title">CSPM Executive Dashboard</h3>
         <div className="widgets-grid">
-          {widgets.cspm.filter(widget => selectedWidgets.cspm.includes(widget.id)).map(widget => (
+          {filteredWidgets.cspm.filter(widget => selectedWidgets.cspm.includes(widget.id)).map(widget => (
             <Widget key={widget.id} widget={widget} onRemove={() => handleRemoveWidget('cspm', widget.id)} />
           ))}
-          
           <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cspm')}>+ Add Widget</button></div>
         </div>
       </div>
@@ -124,10 +143,10 @@ function Dashboard() {
       <div className="dashboard-section">
         <h3 className="section-title">CWPP Dashboard</h3>
         <div className="widgets-grid">
-          {widgets.cwpp.filter(widget => selectedWidgets.cwpp.includes(widget.id)).map(widget => (
+          {filteredWidgets.cwpp.filter(widget => selectedWidgets.cwpp.includes(widget.id)).map(widget => (
             <Widget key={widget.id} widget={widget} onRemove={() => handleRemoveWidget('cwpp', widget.id)} />
           ))}
-         <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cspm')}>+ Add Widget</button></div>
+          <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cwpp')}>+ Add Widget</button></div>
         </div>
       </div>
 
@@ -135,10 +154,10 @@ function Dashboard() {
       <div className="dashboard-section">
         <h3 className="section-title">Registry Scan</h3>
         <div className="widgets-grid">
-          {widgets.registry.filter(widget => selectedWidgets.registry.includes(widget.id)).map(widget => (
+          {filteredWidgets.registry.filter(widget => selectedWidgets.registry.includes(widget.id)).map(widget => (
             <Widget key={widget.id} widget={widget} onRemove={() => handleRemoveWidget('registry', widget.id)} />
           ))}
-          <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('cspm')}>+ Add Widget</button></div>
+          <div className="widget-placeholder"><button onClick={() => handleAddWidgetClick('registry')}>+ Add Widget</button></div>
         </div>
       </div>
 
