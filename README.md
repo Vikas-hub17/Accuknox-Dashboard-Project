@@ -7,6 +7,8 @@
 ## Deployed using Netlify:
 - Link : https://dashboardaccuknox.netlify.app/
 
+## Screenshots:
+
 ![Screenshot 2024-08-20 211955](https://github.com/user-attachments/assets/3c9ef70c-3521-4de4-bf60-49fdf5263792)
 
 
